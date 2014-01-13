@@ -4,5 +4,9 @@
         android:id="@+id/see_history"
         android:orderInCategory="100"
         android:title="@string/history"/>
+    <item
+        android:id="@+id/export_db"
+        android:orderInCategory="100"
+        android:title="@string/db"/>
 
 </menu>

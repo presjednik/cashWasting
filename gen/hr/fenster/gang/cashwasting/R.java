@@ -11,39 +11,42 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int button_black=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int bottom_line=0x7f07001c;
+        public static final int bottom_line=0x7f07001d;
         public static final int button_add=0x7f070000;
         public static final int cash_input=0x7f070009;
+        public static final int change_end_date=0x7f07000e;
+        public static final int change_start_date=0x7f070012;
         public static final int date_input=0x7f070007;
         public static final int desc_input=0x7f07000a;
-        public static final int desc_layout=0x7f070019;
-        public static final int edit_end=0x7f07000d;
-        public static final int edit_start=0x7f070010;
-        public static final int end_date=0x7f07000f;
-        public static final int history_button=0x7f070011;
-        public static final int history_layout_end=0x7f07000e;
+        public static final int desc_layout=0x7f07001b;
+        public static final int edit_end=0x7f070011;
+        public static final int edit_start=0x7f07000d;
+        public static final int end_date=0x7f070010;
+        public static final int export_db=0x7f07001f;
+        public static final int history_button=0x7f070013;
+        public static final int history_layout_end=0x7f07000f;
         public static final int history_layout_start=0x7f07000b;
-        public static final int linear_dates_time_history=0x7f070014;
+        public static final int linear_dates_time_history=0x7f070016;
         public static final int linear_dates_time_month=0x7f070006;
         public static final int linear_dates_time_week=0x7f070003;
-        public static final int scroll_cashs_history=0x7f070013;
+        public static final int scroll_cashs_history=0x7f070015;
         public static final int scroll_cashs_month=0x7f070005;
         public static final int scroll_cashs_week=0x7f070002;
-        public static final int see_history=0x7f07001d;
+        public static final int see_history=0x7f07001e;
         public static final int start_date=0x7f07000c;
-        public static final int string_desc=0x7f07001a;
-        public static final int textView_cash=0x7f070018;
-        public static final int textView_date=0x7f070016;
-        public static final int textView_desc=0x7f07001b;
-        public static final int textView_time=0x7f070017;
+        public static final int textView_cash=0x7f07001a;
+        public static final int textView_date=0x7f070018;
+        public static final int textView_desc=0x7f07001c;
+        public static final int textView_time=0x7f070019;
         public static final int text_wasted=0x7f070001;
-        public static final int text_wasted_history=0x7f070012;
+        public static final int text_wasted_history=0x7f070014;
         public static final int text_wasted_month=0x7f070004;
         public static final int time_input=0x7f070008;
-        public static final int time_layout=0x7f070015;
+        public static final int time_layout=0x7f070017;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -55,19 +58,18 @@ public final class R {
         public static final int activity_main=0x7f060000;
     }
     public static final class string {
+        public static final int amount_of_cash=0x7f040003;
         public static final int app_name=0x7f040000;
-        public static final int button_add=0x7f040003;
-        public static final int cash=0x7f040007;
-        public static final int desc=0x7f040006;
-        public static final int desc2=0x7f04000c;
-        public static final int end_date=0x7f04000a;
-        public static final int hello_world=0x7f040001;
-        public static final int history=0x7f040008;
-        public static final int menu_settings=0x7f040002;
-        public static final int search=0x7f04000b;
-        public static final int start_date=0x7f040009;
-        public static final int text_month=0x7f040005;
-        public static final int text_week=0x7f040004;
+        public static final int button_add=0x7f040001;
+        public static final int change_date=0x7f040008;
+        public static final int db=0x7f04000b;
+        public static final int delete=0x7f040009;
+        public static final int desc=0x7f040002;
+        public static final int edit=0x7f04000a;
+        public static final int end_date=0x7f040006;
+        public static final int history=0x7f040004;
+        public static final int search=0x7f040007;
+        public static final int start_date=0x7f040005;
     }
     public static final class style {
         /** 
@@ -80,10 +82,11 @@ public final class R {
             backward-compatibility can go here.
         
          */
-        public static final int AppBaseTheme=0x7f050000;
+        public static final int AppBaseTheme=0x7f050001;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f050001;
+        public static final int AppTheme=0x7f050002;
+        public static final int ButtonText=0x7f050000;
     }
 }

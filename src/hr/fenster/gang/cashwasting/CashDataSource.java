@@ -92,9 +92,28 @@ public class CashDataSource {
 	public List<Cash> getAllCashs() {
 		List<Cash> cashs = new ArrayList<Cash>();
 
-		Cursor cursor = database.query(MySQLite.TABLE_CASH, allColumns, null,
-				null, null, null, MySQLite.COLUMN_DATE + " DESC, "
-						+ MySQLite.COLUMN_TIME + " DESC");
+		Cursor cursor = database.query(true, MySQLite.TABLE_CASH, allColumns, null,
+				null, MySQLite.COLUMN_DESCRIPTION, null, MySQLite.COLUMN_DATE + " DESC, "
+						+ MySQLite.COLUMN_TIME + " DESC", null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			Cash cash = cursorToCash(cursor);
+			cashs.add(cash);
+			cursor.moveToNext();
+		}
+		cursor.close();
+		return cashs;
+	}
+	
+	public List<Cash> getWastedCashStartEndDate(String start, String end) {
+		List<Cash> cashs = new ArrayList<Cash>();
+
+		Cursor cursor = database.rawQuery("SELECT * FROM " + MySQLite.TABLE_CASH
+				+ " WHERE " + MySQLite.COLUMN_DATE
+				+ " BETWEEN " + "'" + start + "'" + " AND " + "'" + end + "'" + " ORDER BY "
+				+ MySQLite.COLUMN_DATE + " DESC, " + MySQLite.COLUMN_TIME
+				+ " DESC", null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {

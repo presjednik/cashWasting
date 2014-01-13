@@ -7,14 +7,16 @@
 
     <Button
         android:id="@+id/button_add"
+        style="@style/ButtonText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/button_black"
         android:clickable="true"
         android:text="@string/button_add"
-        android:textSize="30sp"
-        android:background="@android:color/black"
         android:textColor="@android:color/white"
-        android:layout_marginBottom="1dp" />
+        android:textSize="30sp" />
+
     <TextView
         android:id="@+id/text_wasted"
         android:layout_width="fill_parent"
@@ -22,6 +24,7 @@
         android:background="@android:color/black"
         android:clickable="true"
         android:gravity="center"
+        android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -46,6 +49,7 @@
         android:background="@android:color/black"
         android:clickable="true"
         android:gravity="center"
+        android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
 

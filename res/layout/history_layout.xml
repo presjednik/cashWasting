@@ -17,11 +17,18 @@
             android:text="@string/start_date" />
 
         <EditText
-            android:id="@+id/edit_end"
+            android:id="@+id/edit_start"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:gravity="right"
+            android:inputType="none" />
+
+        <Button
+            android:id="@+id/change_end_date"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:inputType="date" />
+            android:text="@string/change_date" />
     </LinearLayout>
 
     <LinearLayout
@@ -37,11 +44,18 @@
             android:text="@string/end_date" />
 
         <EditText
-            android:id="@+id/edit_start"
+            android:id="@+id/edit_end"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:gravity="right"
+            android:inputType="none" />
+
+        <Button
+            android:id="@+id/change_start_date"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:inputType="date" />
+            android:text="@string/change_date" />
     </LinearLayout>
 
     <Button
@@ -57,6 +71,7 @@
         android:background="@android:color/black"
         android:clickable="true"
         android:gravity="center"
+        android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
 

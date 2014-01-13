@@ -22,16 +22,16 @@
         android:id="@+id/cash_input"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:hint="@string/cash"
+        android:hint="@string/amount_of_cash"
+        android:imeOptions="actionDone"
         android:inputType="numberDecimal" />
 
     <AutoCompleteTextView
         android:id="@+id/desc_input"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
         android:hint="@string/desc"
-        android:inputType="textAutoComplete|textCapWords" />
+        android:imeOptions="actionDone"
+        android:inputType="textAutoComplete|textCapSentences" />
 
 </LinearLayout>
