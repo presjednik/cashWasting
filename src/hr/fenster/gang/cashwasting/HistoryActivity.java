@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -119,6 +120,7 @@ public class HistoryActivity extends Activity {
 	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
 		// when dialog box is closed, below method will be called.
+		@Override
 		public void onDateSet(DatePicker view, int selectedYear,
 				int selectedMonth, int selectedDay) {
 			year = selectedYear;
@@ -161,8 +163,8 @@ public class HistoryActivity extends Activity {
 			l.setMinimumHeight(30);
 
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.MATCH_PARENT);
+					LayoutParams.MATCH_PARENT,
+					LayoutParams.MATCH_PARENT);
 
 			layoutParams.setMargins(0, 0, 0, 5);
 
@@ -180,6 +182,7 @@ public class HistoryActivity extends Activity {
 					alert.setView(text);
 					alert.setPositiveButton("Ok",
 							new DialogInterface.OnClickListener() {
+								@Override
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
 									datasource.deleteCash(c);
@@ -190,6 +193,7 @@ public class HistoryActivity extends Activity {
 
 					alert.setNegativeButton("Cancel",
 							new DialogInterface.OnClickListener() {
+								@Override
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
 									dialog.cancel();

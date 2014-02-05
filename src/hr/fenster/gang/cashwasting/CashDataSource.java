@@ -93,8 +93,7 @@ public class CashDataSource {
 		List<Cash> cashs = new ArrayList<Cash>();
 
 		Cursor cursor = database.query(true, MySQLite.TABLE_CASH, allColumns, null,
-				null, MySQLite.COLUMN_DESCRIPTION, null, MySQLite.COLUMN_DATE + " DESC, "
-						+ MySQLite.COLUMN_TIME + " DESC", null);
+				null, MySQLite.COLUMN_DESCRIPTION, null, "COUNT(*) DESC", "4");
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {

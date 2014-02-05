@@ -11,6 +11,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -19,6 +20,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -40,7 +43,6 @@ public class MainActivity extends Activity {
 
 	private final CashDataSource datasource = new CashDataSource(this);
 	private boolean show = true;
-	private boolean monthShow = true;
 	private double sumCash;
 	private double monthSumCash;
 	private TextView monthWasted;
@@ -59,8 +61,10 @@ public class MainActivity extends Activity {
 
 		datasource.open();
 
-		monthWasted = (TextView) findViewById(R.id.text_wasted_month);
-		wasted = (TextView) findViewById(R.id.text_wasted);
+		LinearLayout tabLayout = (LinearLayout) findViewById(R.id.tab_layout);
+		monthWasted = (TextView) tabLayout.findViewById(R.id.month_text_wasted);
+		// monthWasted = (TextView) findViewById(R.id.text_wasted_month);
+		wasted = (TextView) tabLayout.findViewById(R.id.text_wasted);
 
 		ScrollView sv = (ScrollView) findViewById(R.id.scroll_cashs_week);
 		ScrollView month_sv = (ScrollView) findViewById(R.id.scroll_cashs_month);
@@ -74,8 +78,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				addEntryAlertDialog("Add new amount and select description",
-						null);
+				addEntryAlertDialog("New entry", null);
 			}
 		});
 
@@ -90,13 +93,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				if (show) {
-					date_time.setVisibility(View.VISIBLE);
-					show = false;
-				} else {
-					date_time.setVisibility(View.GONE);
-					show = true;
-				}
+				show = true;
+				setMainScrollView();
 			}
 		});
 
@@ -105,18 +103,30 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				if (monthShow) {
-					month_date_time.setVisibility(View.VISIBLE);
-					monthShow = false;
-				} else {
-					month_date_time.setVisibility(View.GONE);
-					monthShow = true;
-				}
+				show = false;
+				setMainScrollView();
 			}
 		});
 
+		setMainScrollView();
+
 		setMonthWastedMoneyText(monthWasted);
 		setWastedMoneyText(wasted);
+	}
+
+	private void setMainScrollView() {
+		if (show) {
+			date_time.setVisibility(View.VISIBLE);
+			month_date_time.setVisibility(View.GONE);
+			wasted.setTextColor(Color.WHITE);
+			monthWasted.setTextColor(Color.GRAY);
+		} else {
+			date_time.setVisibility(View.GONE);
+			month_date_time.setVisibility(View.VISIBLE);
+			wasted.setTextColor(Color.GRAY);
+			monthWasted.setTextColor(Color.WHITE);
+		}
+
 	}
 
 	private void addEntryAlertDialog(String title, final Cash c) {
@@ -134,21 +144,21 @@ public class MainActivity extends Activity {
 				descriptions);
 
 		final EditText inputCash = (EditText) l.findViewById(R.id.cash_input);
-		
+
 		final EditText inputDate = (EditText) l.findViewById(R.id.date_input);
-		
+
 		final EditText inputTime = (EditText) l.findViewById(R.id.time_input);
-		
+
 		final AutoCompleteTextView inputDesc = (AutoCompleteTextView) l
 				.findViewById(R.id.desc_input);
-		
-		if(c != null){
+
+		if (c != null) {
 			inputCash.setText(String.valueOf(c.getCash()));
 			inputDate.setText(c.getDate());
 			inputTime.setText(c.getTime());
 			inputDesc.setText(c.getDesc());
 		}
-		
+
 		inputDesc.setThreshold(0);
 		inputDesc.setAdapter(adapter);
 		inputDesc.setOnTouchListener(new View.OnTouchListener() {
@@ -171,6 +181,7 @@ public class MainActivity extends Activity {
 		alert.setView(l);
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 
 				if (c != null) {
@@ -198,6 +209,7 @@ public class MainActivity extends Activity {
 
 		alert.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int whichButton) {
 						dialog.cancel();
 					}
@@ -225,8 +237,7 @@ public class MainActivity extends Activity {
 			l.setMinimumHeight(30);
 
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.MATCH_PARENT);
+					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
 			layoutParams.setMargins(0, 0, 0, 5);
 
@@ -274,8 +285,7 @@ public class MainActivity extends Activity {
 			l.setMinimumHeight(30);
 
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.MATCH_PARENT);
+					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
 			layoutParams.setMargins(0, 0, 0, 5);
 			layout.addView(l);
@@ -318,6 +328,7 @@ public class MainActivity extends Activity {
 		text.setText("Do you want to delete this entry?");
 		alert.setView(text);
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				datasource.deleteCash(c);
 				layout.removeView(l);
@@ -330,6 +341,7 @@ public class MainActivity extends Activity {
 
 		alert.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int whichButton) {
 						dialog.cancel();
 					}
@@ -359,12 +371,12 @@ public class MainActivity extends Activity {
 
 	private void setWastedMoneyText(TextView wasted) {
 		getSumCash();
-		wasted.setText("Week: " + String.valueOf(sumCash) + " kn");
+		wasted.setText("W: " + String.valueOf(sumCash) + " kn");
 	}
 
 	private void setMonthWastedMoneyText(TextView monthWasted) {
 		getMonthSumCash();
-		monthWasted.setText("Month: " + String.valueOf(monthSumCash) + " kn");
+		monthWasted.setText("M: " + String.valueOf(monthSumCash) + " kn");
 	}
 
 	@SuppressLint("SimpleDateFormat")
@@ -373,29 +385,38 @@ public class MainActivity extends Activity {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View v = inflater.inflate(R.layout.layout_dates_time, null);
 
-		LinearLayout timeLayout = (LinearLayout) v
+		LinearLayout entryLayout = (LinearLayout) v
+				.findViewById(R.id.entry_layout);
+		LinearLayout allExcept = (LinearLayout) entryLayout
+				.findViewById(R.id.all_except_money);
+
+		LinearLayout timeLayout = (LinearLayout) allExcept
 				.findViewById(R.id.time_layout);
-		LinearLayout descLayout = (LinearLayout) v
+		LinearLayout descLayout = (LinearLayout) allExcept
 				.findViewById(R.id.desc_layout);
 
 		TextView t = (TextView) timeLayout.findViewById(R.id.textView_date);
-		t.setTextSize(Float.valueOf(20));
+		t.setTextSize(Float.valueOf(15));
 		String newDate = null;
+		java.util.Date date = null;
 		try {
-			java.util.Date date = new SimpleDateFormat("yyyy-MM-dd").parse(c
-					.getDate());
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(c.getDate());
 			newDate = new SimpleDateFormat("dd.MM.yyyy").format(date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		t.setText(newDate);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+		t.setText(getDayOfWeek(dayOfWeek) + " " + newDate);
 
 		TextView t2 = (TextView) timeLayout.findViewById(R.id.textView_time);
-		t2.setTextSize(Float.valueOf(20));
-		t2.setText(c.getTime());
+		t2.setTextSize(Float.valueOf(15));
+		String s = c.getTime().substring(0, Math.min(c.getTime().length(), 8));
+		t2.setText(s);
 
-		TextView t3 = (TextView) timeLayout.findViewById(R.id.textView_cash);
-		t3.setTextSize(Float.valueOf(20));
+		TextView t3 = (TextView) entryLayout.findViewById(R.id.textView_cash);
+		t3.setTextSize(Float.valueOf(26));
 		t3.setText(String.valueOf(c.getCash()) + " kn");
 
 		TextView t4 = (TextView) descLayout.findViewById(R.id.textView_desc);
@@ -403,6 +424,37 @@ public class MainActivity extends Activity {
 		t4.setText(c.getDesc());
 
 		return (LinearLayout) v;
+	}
+
+	private String getDayOfWeek(int id) {
+		String s = new String();
+		switch (id) {
+		case 2:
+			s = "Mon";
+			break;
+		case 3:
+			s = "Tue";
+			break;
+		case 4:
+			s = "Wed";
+			break;
+		case 5:
+			s = "Thu";
+			break;
+		case 6:
+			s = "Fri";
+			break;
+		case 7:
+			s = "Sat";
+			break;
+		case 1:
+			s = "Sun";
+			break;
+
+		default:
+
+		}
+		return s;
 	}
 
 	@Override
@@ -422,34 +474,41 @@ public class MainActivity extends Activity {
 		case R.id.export_db:
 			/*Intent i = new Intent(c, HistoryActivity.class);
 			startActivity(i);*/
-			//data/data/hr.fenster.gang.cashwasting/databases/cash.db
-			
+			// data/data/hr.fenster.gang.cashwasting/databases/cash.db
+
 			try {
-		        //File sd = Environment.getExternalStorageDirectory();
-				File sd = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-		        File data = Environment.getDataDirectory();
+				// File sd = Environment.getExternalStorageDirectory();
+				File sd = Environment
+						.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+				File data = Environment.getDataDirectory();
 
-		        if (sd.canWrite()) {
-		            String currentDBPath = "//data//hr.fenster.gang.cashwasting//databases//cash.db";
-		            String backupDBPath = "cash_old.db";
-		            File currentDB = new File(data, currentDBPath);
-		            File backupDB = new File(sd, backupDBPath);
+				if (sd.canWrite()) {
+					String currentDBPath = "//data//hr.fenster.gang.cashwasting//databases//cash.db";
+					String backupDBPath = "cash_old.db";
+					File currentDB = new File(data, currentDBPath);
+					File backupDB = new File(sd, backupDBPath);
 
-		            if (currentDB.exists()) {
-		                @SuppressWarnings("resource")
-						FileChannel src = new FileInputStream(currentDB).getChannel();
-		                @SuppressWarnings("resource")
-						FileChannel dst = new FileOutputStream(backupDB).getChannel();
-		                dst.transferFrom(src, 0, src.size());
-		                src.close();
-		                dst.close();
-		                Toast.makeText(getBaseContext(), backupDB.toString() + " PROSLO", Toast.LENGTH_LONG).show();
-		            } else {
-		            	Toast.makeText(getBaseContext(), backupDB.toString() + " nekaj", Toast.LENGTH_LONG).show();
-		            }
-		        }
-		    } catch (Exception e) {
-		    }
+					if (currentDB.exists()) {
+						@SuppressWarnings("resource")
+						FileChannel src = new FileInputStream(currentDB)
+								.getChannel();
+						@SuppressWarnings("resource")
+						FileChannel dst = new FileOutputStream(backupDB)
+								.getChannel();
+						dst.transferFrom(src, 0, src.size());
+						src.close();
+						dst.close();
+						Toast.makeText(getBaseContext(),
+								backupDB.toString() + " PROSLO",
+								Toast.LENGTH_LONG).show();
+					} else {
+						Toast.makeText(getBaseContext(),
+								backupDB.toString() + " nekaj",
+								Toast.LENGTH_LONG).show();
+					}
+				}
+			} catch (Exception e) {
+			}
 			break;
 		default:
 			break;
